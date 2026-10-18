@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Type Quest 英文打字冒險</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 背景場景：天空、山、城堡、湖、森林 -->
+<div class="scene" aria-hidden="true">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7fb8e6"/><stop offset=".5" stop-color="#cfe6ee"/><stop offset="1" stop-color="#f3ecd2"/>
+      </linearGradient>
+      <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7fc1d8"/><stop offset="1" stop-color="#3f8fb0"/>
+      </linearGradient>
+      <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7fae5b"/><stop offset="1" stop-color="#2f5b34"/>
+      </linearGradient>
+      <symbol id="pine" viewBox="0 0 100 160">
+        <rect x="45" y="128" width="10" height="32" fill="#5b3f27"/>
+        <polygon points="50,0 85,55 15,55" fill="#3b7d45"/>
+        <polygon points="50,25 92,92 8,92" fill="#2f6b3a"/>
+        <polygon points="50,55 98,132 2,132" fill="#265a31"/>
+      </symbol>
+    </defs>
+    <rect width="1600" height="900" fill="url(#sky)"/>
+    <g fill="#fff" opacity=".85">
+      <ellipse cx="300" cy="110" rx="90" ry="22"/><ellipse cx="360" cy="95" rx="60" ry="20"/>
+      <ellipse cx="1250" cy="140" rx="110" ry="24"/><ellipse cx="1320" cy="120" rx="70" ry="20"/>
+      <ellipse cx="900" cy="70" rx="80" ry="16"/>
+    </g>
+    <!-- 遠山 -->
+    <polygon points="0,430 140,300 260,400 430,250 600,410 760,330 900,420 1080,280 1250,410 1400,310 1600,430 1600,520 0,520" fill="#9fb9cc"/>
+    <polygon points="430,250 470,300 440,290 420,320 395,290" fill="#fff" opacity=".8"/>
+    <polygon points="1080,280 1120,330 1090,322 1070,350 1045,322" fill="#fff" opacity=".8"/>
+    <polygon points="0,470 200,380 380,450 560,390 760,460 1000,400 1200,455 1400,395 1600,460 1600,540 0,540" fill="#7fa28f"/>
+    <!-- 城堡山丘 -->
+    <path d="M520,470 Q800,300 1080,470 Z" fill="#6f9b57"/>
+    <g transform="translate(800,345)">
+      <rect x="-80" y="-80" width="160" height="80" fill="#cdc3b1"/>
+      <rect x="-26" y="-130" width="52" height="130" fill="#d6ccba"/>
+      <polygon points="-32,-130 0,-185 32,-130" fill="#7b5a4b"/>
+      <rect x="-118" y="-100" width="34" height="100" fill="#c4baa8"/>
+      <polygon points="-124,-100 -101,-145 -78,-100" fill="#7b5a4b"/>
+      <rect x="84" y="-100" width="34" height="100" fill="#c4baa8"/>
+      <polygon points="78,-100 101,-145 124,-100" fill="#7b5a4b"/>
+      <rect x="-60" y="-120" width="26" height="40" fill="#c4baa8"/>
+      <polygon points="-64,-120 -47,-152 -30,-120" fill="#8a4b3b"/>
+      <rect x="34" y="-120" width="26" height="40" fill="#c4baa8"/>
+      <polygon points="30,-120 47,-152 64,-120" fill="#8a4b3b"/>
+      <path d="M-14,0 v-30 a14,14 0 0 1 28,0 v30z" fill="#5a3d2b"/>
+      <g fill="#5a4a46"><rect x="-8" y="-100" width="6" height="14"/><rect x="2" y="-100" width="6" height="14"/>
+      <rect x="-108" y="-70" width="6" height="14"/><rect x="102" y="-70" width="6" height="14"/></g>
+    </g>
+    <!-- 橋與湖 -->
+    <rect x="0" y="470" width="1600" height="70" fill="url(#lake)" opacity=".95"/>
+    <path d="M560,480 Q700,440 840,480" stroke="#b7aa95" stroke-width="12" fill="none"/>
+    <!-- 地面 -->
+    <path d="M0,520 Q400,500 800,540 T1600,520 V900 H0 Z" fill="url(#floor)"/>
+    <g id="trees"></g>
+  </svg>
+</div>
+
+<div class="app">
+  <!-- 左側選單 -->
+  <aside class="sidebar panel">
+    <div class="logo">
+      <div class="logo-icon">🧭</div>
+      <div>
+        <div class="logo-title">Type Quest</div>
+        <div class="logo-sub">英文打字冒險</div>
+      </div>
+    </div>
+    <p class="slogan">用打字，開啟你的<br>英文冒險旅程！</p>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="home"><span>🏠</span>首頁</button>
+      <button class="nav-btn" data-view="map"><span>🗺️</span>關卡地圖</button>
+      <button class="nav-btn" data-view="badges"><span>🏆</span>成就徽章</button>
+      <button class="nav-btn" data-view="records"><span>📊</span>個人紀錄</button>
+      <button class="nav-btn" data-view="settings"><span>⚙️</span>設定</button>
+    </nav>
+  </aside>
+
+  <!-- 中間主區 -->
+  <main class="main">
+    <div class="topbar">
+      <div class="level-card" id="levelCard"></div>
+    </div>
+
+    <!-- 首頁：打字練習 -->
+    <section class="view active" id="view-home">
+      <div class="practice">
+        <div class="panel practice-panel">
+          <h2 class="panel-title">📖 打字練習</h2>
+          <p class="hint-text" id="hintText"></p>
+          <div class="target" id="target"></div>
+          <div class="typed" id="typed"></div>
+          <div class="kb" id="kb"></div>
+        </div>
+        <div class="panel stats-panel">
+          <div class="stat"><div class="stat-ico">⏱️</div><div><div class="stat-label">時間</div><div class="stat-val" id="sTime">00:00</div></div></div>
+          <div class="stat"><div class="stat-ico">🚀</div><div><div class="stat-label">WPM 速度</div><div class="stat-val" id="sWpm">0</div></div></div>
+          <div class="stat"><div class="stat-ico">🎯</div><div><div class="stat-label">正確率</div><div class="stat-val" id="sAcc">100%</div></div></div>
+          <div class="progress-row"><span>進度</span><span id="sProg">0/10</span></div>
+          <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+          <div class="tip">
+            <div class="tip-title">💡 小提示</div>
+            <div id="tipText">保持正確指法，讓打字更快更準確！</div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" id="btnRestart">🔄 重新練習</button>
+        <button class="btn btn-primary" id="btnSkip">▶ 下一個單字 →</button>
+      </div>
+    </section>
+
+    <section class="view" id="view-map"><div class="panel pad" id="mapBox"></div></section>
+    <section class="view" id="view-badges"><div class="panel pad" id="badgeBox"></div></section>
+    <section class="view" id="view-records"><div class="panel pad" id="recordBox"></div></section>
+    <section class="view" id="view-settings"><div class="panel pad" id="settingBox"></div></section>
+  </main>
+
+  <!-- 右側 -->
+  <aside class="right">
+    <div class="user-chip">
+      <div class="avatar">🧙</div>
+      <div><div class="user-name" id="userName">小雲</div><div class="user-stars">⭐ <span id="userStars">0</span></div></div>
+    </div>
+    <div class="panel pad-sm">
+      <h3 class="side-title">📜 關卡進度</h3>
+      <div id="levelList"></div>
+    </div>
+    <div class="panel pad-sm">
+      <h3 class="side-title">成就徽章 <a href="#" id="seeAll">查看全部 ›</a></h3>
+      <div class="badge-grid" id="badgeMini"></div>
+    </div>
+    <div class="quote panel">每一次的練習，<br>都是向夢想更近一步！</div>
+  </aside>
+</div>
+
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="game.js"></script>
+</body>
+</html>
